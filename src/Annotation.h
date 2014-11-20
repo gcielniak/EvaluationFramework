@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <algorithm>
 
 namespace EvaluationFramework
 {
@@ -10,9 +11,12 @@ namespace EvaluationFramework
 	class Annotation
 	{
 		int id;
+
 	public:
-		Annotation(int _id)
-			: id(_id) {}
+		double weight;
+
+		Annotation(int _id, double _weight)
+			: id(_id), weight(_weight) {}
 
 		virtual void fit(const vector<double>&) {};
 
@@ -26,8 +30,8 @@ namespace EvaluationFramework
 			double min_x, min_y, max_x, max_y;
 
 		public:
-			Box(int id=0, double _min_x=0.0,  double _min_y=0.0,  double _max_x=0.0, double _max_y=0.0)
-				: min_x(_min_x), min_y(_min_y), max_x(_max_x), max_y(_max_y), Annotation(id) 
+			Box(int id=0, double _min_x=0.0,  double _min_y=0.0,  double _max_x=0.0, double _max_y=0.0, double weight=std::numeric_limits<double>::min())
+				: min_x(_min_x), min_y(_min_y), max_x(_max_x), max_y(_max_y), Annotation(id, weight) 
 			{
 			}
 
@@ -52,16 +56,30 @@ namespace EvaluationFramework
 		};
 	}
 
+	typedef std::pair<double, int> sort_pair;
+
+	bool asc_order(const Annotation* l, const Annotation* r)
+		{ return l->weight < r->weight; }
+
+	bool dsc_order(const Annotation* l, const Annotation* r)
+		{ return l->weight > r->weight; }
+
 	class Frame
 	{
 		int id;
 		string image_name;
-		vector<const Annotation*> annotations;
 
 	public:
-		void Add(const Annotation* annotation)
+		vector<Annotation*> annotations;
+
+		void Add(Annotation* annotation)
 		{			
 			annotations.push_back(annotation);
+		}
+
+		void Sort()
+		{
+			std::sort(annotations.begin(), annotations.end(), dsc_order);
 		}
 	};
 }

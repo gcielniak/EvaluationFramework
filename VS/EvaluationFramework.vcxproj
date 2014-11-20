@@ -10,6 +10,12 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Annotation.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\EvaluationFrameworkApp.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7E1974A9-8C6D-4A3F-9789-B6E4692F6519}</ProjectGuid>
     <RootNamespace>EvaluationFramework</RootNamespace>
@@ -63,12 +69,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="EvaluationFrameworkApp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Annotation.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
