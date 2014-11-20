@@ -1,12 +1,14 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <sstream>
+#include <fstream>
 
 namespace EvaluationFramework
 {
 	using namespace std;
-
 
 	class Annotation
 	{
@@ -67,10 +69,10 @@ namespace EvaluationFramework
 	class Frame
 	{
 		int id;
-		string image_name;
 
 	public:
 		vector<Annotation*> annotations;
+		string image_name;
 
 		void Add(Annotation* annotation)
 		{			
@@ -82,4 +84,30 @@ namespace EvaluationFramework
 			std::sort(annotations.begin(), annotations.end(), dsc_order);
 		}
 	};
+
+	void LoadPascal(vector<Frame>& frames, string file_name)
+	{
+		std::ifstream in(file_name);
+		std::string line;
+		string frame_id;
+		double score, min_x, min_y, max_x, max_y;
+
+		while (std::getline(in, line))
+		{
+			std::istringstream(line) >> frame_id >> score >> min_x >> min_y >> max_x >> max_y;
+			cerr << frame_id << " " << score << " " << min_x << " " << min_y << " " << max_x << " " << max_y << endl;
+			for (unsigned int i = 0; i < frames.size(); i++)
+			{
+				if (!frames[i].image_name.compare(frame_id))
+
+
+			}
+		}
+
+		//read image id
+		//find in the existing frames if not add a new one
+		//read score
+		//read box coordinates
+
+	}
 }

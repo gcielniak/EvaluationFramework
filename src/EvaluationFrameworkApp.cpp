@@ -20,6 +20,9 @@ std::ostream& operator<<(std::ostream& stm, const std::vector<T>& obj) {
 
 int main()
 {
+	vector<Frame> v;
+	LoadPascal(v, "gt.txt");
+
 	BoundingVolume::Box box;
 	Frame frame;
 
@@ -125,4 +128,3 @@ int main()
 
 	return 0;
 }
-
