@@ -34,17 +34,17 @@ int main()
 
 	Frame gt, output;
 
-	gt.Add(new BoundingVolume::Box(0, 3, 3, 3 + 4, 3 + 2));
-	gt.Add(new BoundingVolume::Box(0, 11, 2, 11 + 4, 2 + 2));
-	gt.Add(new BoundingVolume::Box(0, 17, 6, 17 + 4, 6 + 2));
+	gt.Add(new BoundingVolume::Box(0, 2.8, 3.0, 2.8 + 4, 3.0 + 2.3));
+	gt.Add(new BoundingVolume::Box(0, 10.8, 2.3, 10.8 + 4, 2.3 + 2.3));
+	gt.Add(new BoundingVolume::Box(0, 16.9, 6.1, 16.9 + 4, 6.1 + 2.3));
 
-	output.Add(new BoundingVolume::Box(0, 1, 1, 1 + 4, 1 + 2, 0.1));
-	output.Add(new BoundingVolume::Box(0, 3, 3, 3 + 4, 3 + 2, 0.8));
-	output.Add(new BoundingVolume::Box(0, 2, 5, 2 + 4, 5 + 2, 0.2));
-	output.Add(new BoundingVolume::Box(0, 1, 7, 1 + 4, 7 + 2, 0.1));
-	output.Add(new BoundingVolume::Box(0, 11, 3, 11 + 4, 3 + 2, 0.8));
-	output.Add(new BoundingVolume::Box(0, 12, 7, 12 + 4, 7 + 2, 0.1));
-	output.Add(new BoundingVolume::Box(0, 17, 1, 17 + 4, 1 + 2, 0.1));
+	output.Add(new BoundingVolume::Box(0, 0.7, 1.1, 0.7 + 4, 1.1 + 2.3, 0.1));
+	output.Add(new BoundingVolume::Box(0, 3.2, 3.4, 3.2 + 4, 3.4 + 2.3, 0.9));
+	output.Add(new BoundingVolume::Box(0, 2.2, 5.0, 2.2 + 4, 5.0 + 2.3, 0.2));
+	output.Add(new BoundingVolume::Box(0, 1.4, 7.2, 1.4 + 4, 7.2 + 2.3, 0.1));
+	output.Add(new BoundingVolume::Box(0, 10.6, 2.8, 10.6 + 4, 2.8 + 2.3, 0.8));
+	output.Add(new BoundingVolume::Box(0, 12.0, 6.7, 12.0 + 4, 6.7 + 2.3, 0.1));
+	output.Add(new BoundingVolume::Box(0, 16.7, 1.0, 16.7 + 4, 1.0 + 2.3, 0.1));
 
 	//sort the detection in descending order
 	output.Sort();
@@ -97,14 +97,24 @@ int main()
 					fp[i]++;
 				}
 			}
+			else
+				break;
 		}
 		//calculate difference between tp and total gt - these are all missed detections
 		fn[i] = gt.annotations.size() - tp[i];
 	}
 
+	cerr << "Overlaps: ";
+	for (unsigned int i = 0; i < gt.annotations.size(); i++)
+	{
+		for (unsigned int j = 0; j < output.annotations.size(); j++)
+			cerr << overlap[i][j] << " ";
+		cerr << endl;
+	}
+
 	cerr << "Weights: ";
 	for (unsigned int i = 0; i < output.annotations.size(); i++)
-		cerr << output.annotations[i] << " ";
+		cerr << output.annotations[i]->weight << " ";
 	cerr << endl;
 
 	cerr << "ASS: " << assigned << endl;
