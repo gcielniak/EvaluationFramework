@@ -95,13 +95,21 @@ namespace EvaluationFramework
 		while (std::getline(in, line))
 		{
 			std::istringstream(line) >> frame_id >> score >> min_x >> min_y >> max_x >> max_y;
-			cerr << frame_id << " " << score << " " << min_x << " " << min_y << " " << max_x << " " << max_y << endl;
+			Frame* cur_frame = 0;
 			for (unsigned int i = 0; i < frames.size(); i++)
 			{
 				if (!frames[i].image_name.compare(frame_id))
-
-
+					cur_frame = &frames.at(i);
 			}
+			
+			if (!cur_frame)
+			{
+				frames.push_back(Frame());
+				cur_frame = &frames.back();
+				cur_frame->image_name = frame_id;
+			}
+
+			cur_frame->Add(new BoundingVolume::Box(0,min_x, min_y, max_x, max_y, score));
 		}
 
 		//read image id
