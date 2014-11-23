@@ -58,8 +58,6 @@ namespace EvaluationFramework
 		};
 	}
 
-	typedef std::pair<double, int> sort_pair;
-
 	bool asc_order(const Annotation* l, const Annotation* r)
 		{ return l->weight < r->weight; }
 
@@ -112,10 +110,6 @@ namespace EvaluationFramework
 			cur_frame->Add(new BoundingVolume::Box(0,min_x, min_y, max_x, max_y, score));
 		}
 
-		//read image id
-		//find in the existing frames if not add a new one
-		//read score
-		//read box coordinates
-
+		in.close();
 	}
 }
